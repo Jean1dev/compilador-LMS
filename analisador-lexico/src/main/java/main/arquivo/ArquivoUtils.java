@@ -1,8 +1,13 @@
 package main.arquivo;
 
-import java.io.FileInputStream;
+import java.io.*;
 
+@Deprecated
 public class ArquivoUtils {
+
+    private static final String DEFAULT_FILE_NAME = "arquivo.txt";
+
+    @Deprecated
     public static StringBuilder lerArquivo(String filename) {
         try {
             StringBuilder resultado = new StringBuilder();
@@ -19,6 +24,20 @@ public class ArquivoUtils {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void gravarArquivo(String content) {
+        try {
+            File file = new File(DEFAULT_FILE_NAME);
+            FileOutputStream stream = new FileOutputStream(file);
+
+            PrintStream printStream = new PrintStream(stream);
+            printStream.print(content);
+            printStream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

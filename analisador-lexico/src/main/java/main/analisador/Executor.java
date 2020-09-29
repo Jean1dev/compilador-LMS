@@ -14,11 +14,6 @@ public class Executor {
         resultado = new ResultadoExecucao();
     }
 
-    public Executor lerString(String content) {
-        LeitorArquivo.of(resultado, arquivoPath).lerStringESetarNoContexto(content);
-        return this;
-    }
-
     public Executor lerArquivoParaPegarPrograma() {
         LeitorArquivo.of(resultado, arquivoPath).lerArquivoESetarNoContexto();
         return this;
@@ -42,5 +37,9 @@ public class Executor {
         }
 
         return this;
+    }
+
+    public ResultadoExecucao getResultado() {
+        return resultado;
     }
 }
