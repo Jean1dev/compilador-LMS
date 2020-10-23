@@ -1,19 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="screen.MainFrame">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
-    <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
-    </constraints>
-    <properties/>
-    <border type="none"/>
-    <children>
-      <component id="b7cff" class="javax.swing.JButton" binding="button1" default-binding="true">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          private JTable table;
+import java.awt.EventQueue;
+
+
+import javax.swing.JInternalFrame;
+import java.awt.GridBagLayout;
+import javax.swing.JTextArea;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+
+import javax.swing.*;
+
+public class MainFrame extends JInternalFrame {
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -90,8 +93,4 @@
 		getContentPane().add(lblNewLabel_1);
 
 	}
-        </properties>
-      </component>
-    </children>
-  </grid>
-</form>
+}
