@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+//import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import javax.swing.*;
 
@@ -84,9 +84,9 @@ public class MainFrame extends JInternalFrame {
 		btnNewButton_4.setBounds(368, 11, 118, 23);
 		getContentPane().add(btnNewButton_4);
 		
-		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Pilha de Tokens (a)");
-		lblNewJgoodiesLabel.setBounds(916, 462, 92, 14);
-		getContentPane().add(lblNewJgoodiesLabel);
+//		btnNewButton_4JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Pilha de Tokens (a)");
+//		lblNewJgoodiesLabel.setBounds(916, 462, 92, 14);
+//		getContentPane().add(lblNewJgoodiesLabel);
 		
 		JLabel lblNewLabel = new JLabel("Console");
 		lblNewLabel.setBounds(53, 521, 46, 14);
