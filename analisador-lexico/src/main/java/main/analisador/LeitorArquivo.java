@@ -52,9 +52,7 @@ public class LeitorArquivo {
                 boolean delimitador = isDelimitador(lido);
                 boolean quebraLinha = isQuebraLinha(lido);
 
-                if (quebraLinha) {
-                    totalLinhasArquivo++;
-                }
+                adicionaLinha(quebraLinha);
 
                 palavra.append(lido);
 
@@ -63,31 +61,11 @@ public class LeitorArquivo {
                 }
 
                 if (textoComentado) {
-                    boolean fimComentario = isFimComentario(palavra);
-                    if (delimitador || quebraLinha || fimComentario) {
-                        if (fimComentario) {
-                            textoComentado = false;
-                            palavra = new StringBuilder();
-                        } else {
-                            palavra = new StringBuilder();
-                        }
-                    }
+                    palavra = resolverTextoComentado(palavra, delimitador, quebraLinha);
                 }
 
                 if (!textoComentado) {
-                    if (delimitador || quebraLinha) {
-                        String palavraFormatada = palavra.toString().trim();
-                        if (!palavraFormatada.isEmpty()) {
-                            if (validarNomeVariavel(palavraFormatada)) {
-                                if (!verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1))) {
-                                    setarErroNoContexto(palavraFormatada);
-                                }
-                            }
-
-                            texto.add(palavraFormatada);
-                            palavra = new StringBuilder();
-                        }
-                    }
+                    palavra = resolverTextoNaoComentado(palavra, delimitador, quebraLinha, texto);
                 }
 
                 caracterLido = fileInputStream.read();
@@ -98,6 +76,47 @@ public class LeitorArquivo {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private StringBuilder resolverTextoNaoComentado(StringBuilder palavra,
+                                                    boolean delimitador,
+                                                    boolean quebraLinha,
+                                                    ArrayList<String> texto) {
+        if (delimitador || quebraLinha) {
+            String palavraFormatada = palavra.toString().trim();
+            if (!palavraFormatada.isEmpty()) {
+                if (validarNomeVariavel(palavraFormatada)) {
+                    if (!verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1))) {
+                        setarErroNoContexto(palavraFormatada);
+                    }
+                }
+
+                texto.add(palavraFormatada);
+                return new StringBuilder();
+            }
+        }
+
+        return palavra;
+    }
+
+    private StringBuilder resolverTextoComentado(StringBuilder palavra, boolean delimitador, boolean quebraLinha) {
+        boolean fimComentario = isFimComentario(palavra);
+        if (delimitador || quebraLinha || fimComentario) {
+            if (fimComentario) {
+                textoComentado = false;
+                palavra = new StringBuilder();
+            } else {
+                palavra = new StringBuilder();
+            }
+        }
+
+        return palavra;
+    }
+
+    private void adicionaLinha(boolean quebraLinha) {
+        if (quebraLinha) {
+            totalLinhasArquivo++;
         }
     }
 

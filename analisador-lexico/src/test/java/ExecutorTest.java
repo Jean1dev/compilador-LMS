@@ -39,6 +39,7 @@ public class ExecutorTest {
         ArquivoUtils.gravarArquivo(gramatica);
         ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
+                .analisarTexto()
                 .getResultado();
 
         Assert.assertEquals(17, resultado.getPalavras().size());
