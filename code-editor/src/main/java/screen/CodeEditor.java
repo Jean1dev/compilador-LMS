@@ -5,6 +5,13 @@
  */
 package screen;
 
+import java.util.Collection;
+import java.util.Stack;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import main.token.CaracterAnalisadoInfo;
+
 /**
  *
  * @author jeanfernandes
@@ -33,9 +40,12 @@ public class CodeEditor extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         codeArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        palavras = new javax.swing.JList<>();
+        validacoes = new javax.swing.JList<>();
         status = new javax.swing.JTextField();
         save = new javax.swing.JButton();
+        compile = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tokens = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,7 +56,7 @@ public class CodeEditor extends javax.swing.JFrame {
         codeArea.setRows(5);
         jScrollPane1.setViewportView(codeArea);
 
-        jScrollPane2.setViewportView(palavras);
+        jScrollPane2.setViewportView(validacoes);
 
         status.setEditable(false);
 
@@ -57,34 +67,76 @@ public class CodeEditor extends javax.swing.JFrame {
             }
         });
 
+        compile.setText("Compilar");
+        compile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acaoBtnCompile(evt);
+            }
+        });
+
+        tokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        this.tokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+            },
+            new String [] {
+                "Palavra", "Ble 2"
+            }
+        ));
+        jScrollPane3.setViewportView(tokens);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(save))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(save)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(compile)
+                .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(save)
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(save)
+                    .addComponent(compile)))
         );
 
         pack();
@@ -93,7 +145,29 @@ public class CodeEditor extends javax.swing.JFrame {
     private void AcaoBtnSave(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcaoBtnSave
         // TODO add your handling code here:
         this.actions.salvar(this.codeArea.getText());
+        this.status.setText("ARQUIVO SALVO");
     }//GEN-LAST:event_AcaoBtnSave
+
+    private void acaoBtnCompile(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acaoBtnCompile
+        // TODO add your handling code here:
+        this.status.setText("COMPILANDO");
+        this.actions.compile();
+        this.status.setText(this.actions.getStatusCompilacao());
+        
+        Collection<String> mensagensValidacao = this.actions.getMensagensValidacao();
+        
+        String[] toArray = mensagensValidacao.toArray(new String[0]);
+        
+        this.validacoes.setListData(toArray);
+        Stack<CaracterAnalisadoInfo> pilha = this.actions.getPilha();
+        
+        DefaultTableModel model = (DefaultTableModel) this.tokens.getModel();
+        
+        for (int i = 0; i < pilha.size(); i++) {
+            CaracterAnalisadoInfo info = pilha.pop();
+            model.addRow(new Object[]{info.getValor(), info.getToken().getSimbolo()});   
+        }
+    }//GEN-LAST:event_acaoBtnCompile
 
     /**
      * @param args the command line arguments
@@ -132,10 +206,13 @@ public class CodeEditor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea codeArea;
+    private javax.swing.JButton compile;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> palavras;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton save;
     private javax.swing.JTextField status;
+    private javax.swing.JTable tokens;
+    private javax.swing.JList<String> validacoes;
     // End of variables declaration//GEN-END:variables
 }

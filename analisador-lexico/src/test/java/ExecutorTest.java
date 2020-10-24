@@ -42,7 +42,7 @@ public class ExecutorTest {
                 .analisarTexto()
                 .getResultado();
 
-        Assert.assertEquals(17, resultado.getPalavras().size());
+        Assert.assertEquals(30, resultado.getPalavras().size());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ExecutorTest {
                 .lerArquivoParaPegarPrograma()
                 .getResultado();
 
-        Assert.assertEquals(37, resultado.getPalavras().size());
+        Assert.assertEquals(63, resultado.getPalavras().size());
     }
 
 
@@ -105,6 +105,55 @@ public class ExecutorTest {
                 .lerArquivoParaPegarPrograma()
                 .getResultado();
 
-        Assert.assertEquals(42, resultado.getPalavras().size());
+        Assert.assertEquals(71, resultado.getPalavras().size());
+    }
+
+    @Test
+    public void testeGramaticaValida4() {
+        String gramatica = "BEGIN\n" +
+                "     (*Testa as possibilidades do REPEAT*)\n";
+
+        ArquivoUtils.gravarArquivo(gramatica);
+        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .getResultado();
+
+        Assert.assertEquals(1, resultado.getPalavras().size());
+    }
+
+    @Test
+    public void testeGramaticaValida5() {
+        String gramatica = "(*TESTE - inválido: procedure duplicada*)\n" +
+                "PROGRAM TESTE_PROC;\n" +
+                "\t(*Proc A*)\n" +
+                "\tPROCEDURE p_a(idd : INTEGER);\n" +
+                "\t\tVAR\n" +
+                "\t\t    X, Y, Z : INTEGER;\n" +
+                "\tBEGIN\n" +
+                "\t\tX := X * Y;\n" +
+                "\tEND;\n" +
+                "\n" +
+                "\t(*Proc B com os mesmos dados de A*)\n" +
+                "\tPROCEDURE p_a(idd : INTEGER);\n" +
+                "\t\tVAR\n" +
+                "\t\t    X, Y, Z : INTEGER;\n" +
+                "\tBEGIN\n" +
+                "\t\tX := Z *Z;\n" +
+                "\tEND;\n" +
+                "\n" +
+                "\n" +
+                "BEGIN\n" +
+                "\tcall p_a(10 + 2);\n" +
+                "\tcall p_b(5);\n" +
+                "END.";
+
+        ArquivoUtils.gravarArquivo(gramatica);
+        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .getResultado();
+
+        Assert.assertEquals(1, resultado.getPalavras().size());
     }
 }
