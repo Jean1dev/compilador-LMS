@@ -8,16 +8,9 @@ import java.util.List;
 
 import static main.analisador.specs.ValidacoesLexicas.validarNomeVariavel;
 import static main.analisador.specs.ValidacoesLexicas.verificarSeInteiroFoiAlocadoEmNoLugarCerto;
+import static main.analisador.GramaticaConstants.*;
 
 public class LeitorArquivo {
-
-    private static final char ESPACO = ' ';
-
-    private static final char QUEBRA_LINHA = '\n';
-
-    private static final String INICIO_COMENTARIO = "(*";
-
-    private static final String FIM_COMENTARIO = "*)";
 
     private final ResultadoExecucao resultadoExecucao;
 
@@ -65,7 +58,7 @@ public class LeitorArquivo {
                 }
 
                 if (!textoComentado) {
-                    palavra = resolverTextoNaoComentado(palavra, delimitador, quebraLinha, texto);
+                    palavra = resolverTextoNaoComentado(lido, palavra, delimitador, quebraLinha, texto);
                 }
 
                 caracterLido = fileInputStream.read();
@@ -79,25 +72,40 @@ public class LeitorArquivo {
         }
     }
 
-    private StringBuilder resolverTextoNaoComentado(StringBuilder palavra,
+    private StringBuilder resolverTextoNaoComentado(char lido,
+                                                    StringBuilder palavra,
                                                     boolean delimitador,
                                                     boolean quebraLinha,
                                                     ArrayList<String> texto) {
+        if (palavra.toString().trim().length() > 1 && isOperador(lido)) {
+            String conteudo = removeOperador(palavra.toString(), lido);
+            if (!conteudo.isEmpty()) {
+                aplicarRegrasDoLexico(conteudo, texto);
+            }
+            texto.add(String.valueOf(lido));
+            return new StringBuilder();
+        }
+
         if (delimitador || quebraLinha) {
             String palavraFormatada = palavra.toString().trim();
             if (!palavraFormatada.isEmpty()) {
-                if (validarNomeVariavel(palavraFormatada)) {
-                    if (!verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1))) {
-                        setarErroNoContexto(palavraFormatada);
-                    }
-                }
-
-                texto.add(palavraFormatada);
+                aplicarRegrasDoLexico(palavraFormatada, texto);
                 return new StringBuilder();
             }
         }
 
         return palavra;
+    }
+
+    private void aplicarRegrasDoLexico(String conteudo, ArrayList<String> texto) {
+        if (validarNomeVariavel(conteudo) && !verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1)))
+            setarErroNoContexto(conteudo);
+
+        texto.add(conteudo);
+    }
+
+    private String removeOperador(String palavra, char lido) {
+        return palavra.replace(lido, ' ').trim();
     }
 
     private StringBuilder resolverTextoComentado(StringBuilder palavra, boolean delimitador, boolean quebraLinha) {
@@ -140,5 +148,21 @@ public class LeitorArquivo {
 
     private boolean isInicioComentario(StringBuilder palavra) {
         return palavra.toString().equalsIgnoreCase(INICIO_COMENTARIO) || palavra.toString().contains(INICIO_COMENTARIO);
+    }
+
+    private boolean isOperador(char lido) {
+        return lido == PONTO_VIRGULA ||
+                lido == MAIS ||
+                lido == MENOS ||
+                lido == MULTI ||
+                lido == DIV ||
+                lido == ABRE_PARENTESES ||
+                lido == FECHA_PARENTESES ||
+                lido == MAIOR ||
+                lido == MENOR ||
+                lido == VIRGULA ||
+                lido == PONTO ||
+                lido == ABRE_CHAVES ||
+                lido == FECHA_FECHAS;
     }
 }

@@ -33,7 +33,7 @@ public class AnalisadorTexto {
                     .build();
 
             if (Objects.isNull(token)) {
-                info.setToken(Token.identificador());
+                descobrirESetarTokenCorreto(info, palavra);
             } else {
                 info.setToken(token);
             }
@@ -42,6 +42,24 @@ public class AnalisadorTexto {
         });
 
         resultadoExecucao.setStack(stack);
+    }
+
+    private void descobrirESetarTokenCorreto(CaracterAnalisadoInfo info, String palavra) {
+        if (isNumeral(palavra)) {
+            info.setToken(Token.numeral());
+            return;
+        }
+
+        info.setToken(Token.identificador());
+    }
+
+    private boolean isNumeral(String palavra) {
+        try {
+            int isNumero = Integer.parseInt(palavra);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private Token getToken(String palavra) {

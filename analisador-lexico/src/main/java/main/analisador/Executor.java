@@ -14,6 +14,14 @@ public class Executor {
         resultado = new ResultadoExecucao();
     }
 
+    public ResultadoExecucao analisarLexicamente() {
+        return lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .validarTexto()
+                .consolidarResultado()
+                .getResultado();
+    }
+
     public Executor lerArquivoParaPegarPrograma() {
         LeitorArquivo.of(resultado, arquivoPath).lerArquivoESetarNoContexto();
         return this;
