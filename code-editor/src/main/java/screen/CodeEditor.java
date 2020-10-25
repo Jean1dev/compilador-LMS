@@ -46,6 +46,7 @@ public class CodeEditor extends javax.swing.JFrame {
         compile = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tokens = new javax.swing.JTable();
+        limpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,15 +87,19 @@ public class CodeEditor extends javax.swing.JFrame {
             }
         ));
         this.tokens.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-            },
+            new Object [][] {},
             new String [] {
-                "Palavra", "Ble 2"
+                "Palavra", "TOken"
             }
         ));
         jScrollPane3.setViewportView(tokens);
+
+        limpar.setText("Limpar");
+        limpar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acaoBtnLimpar(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,6 +120,8 @@ public class CodeEditor extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(limpar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(save)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(compile)
@@ -136,7 +143,8 @@ public class CodeEditor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(save)
-                    .addComponent(compile)))
+                    .addComponent(compile)
+                    .addComponent(limpar)))
         );
 
         pack();
@@ -168,6 +176,20 @@ public class CodeEditor extends javax.swing.JFrame {
             model.addRow(new Object[]{info.getValor(), info.getToken().getSimbolo()});   
         }
     }//GEN-LAST:event_acaoBtnCompile
+
+    private void acaoBtnLimpar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acaoBtnLimpar
+        // TODO add your handling code here:
+        this.status.setText("LIMPO");
+        this.validacoes.setListData(new String[0]);
+        this.tokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+            },
+            new String [] {
+                "Palavra", "TOken"
+            }
+        ));
+    }//GEN-LAST:event_acaoBtnLimpar
 
     /**
      * @param args the command line arguments
@@ -210,6 +232,7 @@ public class CodeEditor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton limpar;
     private javax.swing.JButton save;
     private javax.swing.JTextField status;
     private javax.swing.JTable tokens;

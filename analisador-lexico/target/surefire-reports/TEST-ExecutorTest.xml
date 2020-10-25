@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="ExecutorTest" time="0.13" errors="0" skipped="0">
+<testsuite tests="8" failures="0" name="ExecutorTest" time="0.222" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2020.2.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -66,8 +66,12 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="ExecutorTest" name="testeIgnorarComentarios" time="0.009"/>
-  <testcase classname="ExecutorTest" name="testeGramaticaValida1" time="0.115"/>
+  <testcase classname="ExecutorTest" name="testeGramaticaInvalida6" time="0.174"/>
+  <testcase classname="ExecutorTest" name="testeIgnorarComentarios" time="0"/>
+  <testcase classname="ExecutorTest" name="testeGramaticaValida1" time="0.003"/>
   <testcase classname="ExecutorTest" name="testeGramaticaValida2" time="0.003"/>
-  <testcase classname="ExecutorTest" name="testeGramaticaValida3" time="0.003"/>
+  <testcase classname="ExecutorTest" name="testeGramaticaValida3" time="0.004"/>
+  <testcase classname="ExecutorTest" name="testeGramaticaValida4" time="0.005"/>
+  <testcase classname="ExecutorTest" name="testeGramaticaValida5" time="0.007"/>
+  <testcase classname="ExecutorTest" name="testeGramaticaValida7" time="0.026"/>
 </testsuite>

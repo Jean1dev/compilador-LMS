@@ -43,6 +43,8 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="limpar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="save" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="compile" min="-2" max="-2" attributes="0"/>
@@ -70,6 +72,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="save" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="compile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="limpar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -151,10 +154,18 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="this.tokens.setModel(new javax.swing.table.DefaultTableModel(&#xa;            new Object [][] {&#xa;                {null, null},&#xa;                {null, null},&#xa;            },&#xa;            new String [] {&#xa;                &quot;Palavra&quot;, &quot;Ble 2&quot;&#xa;            }&#xa;        ));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="this.tokens.setModel(new javax.swing.table.DefaultTableModel(&#xa;            new Object [][] {},&#xa;            new String [] {&#xa;                &quot;Palavra&quot;, &quot;TOken&quot;&#xa;            }&#xa;        ));"/>
           </AuxValues>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="limpar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Limpar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="acaoBtnLimpar"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
