@@ -23,4 +23,8 @@ public class Token {
     public static Token identificador() {
         return new Token(25, "IDENTIFICADOR");
     }
+
+    public static Token numeral() {
+        return new Token(26, "INTEIRO");
+    }
 }

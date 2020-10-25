@@ -14,7 +14,7 @@ public class ValidacoesLexicas {
     /** Verifica se o caracter no array antes é inteiro é uma opcao valida de acordo com a gramatica
      * @return Boolean.TRUE se for valido */
     public static Boolean verificarSeInteiroFoiAlocadoEmNoLugarCerto(String posicaoAntesDele) {
-        List<String> permitidos = Arrays.asList(">", "<", "=", "+", "-", "/", "*", "(", ")");
+        List<String> permitidos = Arrays.asList(">", "<", "=", "+", "-", "/", "*", "(", ")", "[", "]", ":=");
         long count = permitidos.stream().filter(s -> s.equalsIgnoreCase(posicaoAntesDele)).count();
         return count > 0;
     }
