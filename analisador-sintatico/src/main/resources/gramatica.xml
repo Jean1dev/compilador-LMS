@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding="iso-8859-1"?>
-<!DOCTYPE gramatica SYSTEM "catalogoPalavras.dtd">
 <gramatica>
 	<terminais>
 		<terminal codigo="1" simbolo="PROGRAM" />

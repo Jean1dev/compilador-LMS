@@ -6,11 +6,14 @@
 package screen;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import main.token.CaracterAnalisadoInfo;
+
+import static utils.Utils.reverseStack;
 
 /**
  *
@@ -168,10 +171,11 @@ public class CodeEditor extends javax.swing.JFrame {
         
         this.validacoes.setListData(toArray);
         Stack<CaracterAnalisadoInfo> pilha = this.actions.getPilha();
-        
+        reverseStack(pilha);
+
         DefaultTableModel model = (DefaultTableModel) this.tokens.getModel();
-        
-        for (int i = 0; i < pilha.size(); i++) {
+
+        for (int i = pilha.size(); i >= 0; i--) {
             CaracterAnalisadoInfo info = pilha.pop();
             model.addRow(new Object[]{info.getValor(), info.getToken().getSimbolo()});   
         }
