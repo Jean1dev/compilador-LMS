@@ -65,6 +65,8 @@ public class ExecutorTest {
                 "\n" +
                 "END.";
 
+        // array_a : ARRAY[0..20] OF INTEGER;
+
         ArquivoUtils.gravarArquivo(gramatica);
         ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
@@ -270,5 +272,31 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(209, resultado.getPalavras().size());
+    }
+
+    @Test
+    public void testeGramaticaValida8() {
+        String gramatica = "(*TESTE - EXEMPLO VÁLIDO*)\n" +
+                "PROGRAM TESTE123;\n" +
+                "VAR x, A, B : INTEGER;\n" +
+                "\n" +
+                "BEGIN\n" +
+                "     (*Testa as possibilidades do REPEAT*)\n" +
+                "     REPEAT \n" +
+                "     BEGIN \n" +
+                "\tREADLN(A,B);\n" +
+                "     END\n" +
+                "     UNTIL X > 10;\n" +
+                "\n" +
+                "END.";
+
+        ArquivoUtils.gravarArquivo(gramatica);
+        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .validarTexto()
+                .getResultado();
+
+        Assert.assertEquals(30, resultado.getPalavras().size());
     }
 }

@@ -1,12 +1,12 @@
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/analisador/GramaticaConstants.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/analisador/LeitorArquivo.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/resultado/ResultadoExecucao.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/analisador/Executor.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/token/CaracterAnalisadoInfo.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/analisador/specs/ValidacoesLexicas.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/analisador/Validador.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/token/Token.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/arquivo/ArquivoUtils.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/resultado/StatusAnalise.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/token/CriarTabelaToken.java
-/Users/jeanfernandes/Documents/MEUS PROJETOS/compiladores/analisador-lexico/src/main/java/main/analisador/AnalisadorTexto.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\analisador\GramaticaConstants.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\analisador\AnalisadorTexto.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\resultado\ResultadoExecucao.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\analisador\LeitorArquivo.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\analisador\specs\ValidacoesLexicas.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\analisador\Executor.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\resultado\StatusAnalise.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\token\Token.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\analisador\Validador.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\arquivo\ArquivoUtils.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\token\CaracterAnalisadoInfo.java
+C:\Users\jeanluca.fernandes\Documents\projetos\compiladores\analisador-lexico\src\main\java\main\token\CriarTabelaToken.java
