@@ -2,11 +2,13 @@ package analisador;
 
 import gramatica.*;
 import main.resultado.ResultadoExecucao;
+import main.resultado.StatusAnalise;
 import main.token.CaracterAnalisadoInfo;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static gramatica.SimboloComCodigo.simboloInicial;
@@ -41,28 +43,47 @@ public class Executor {
         pilhaX.push(simboloInicial()); // DE ACORDO COM A REGRA DEVE INICIAR A PILHA COM O COD 52
 
         while (!pilhaA.empty() || !pilhaX.empty()) {
-            CaracterAnalisadoInfo topoPilhaA = pilhaA.lastElement();
-            SimboloComCodigo topoPilhaX = pilhaX.lastElement();
+            CaracterAnalisadoInfo topoPilhaA = pilhaA.firstElement();
+            SimboloComCodigo topoPilhaX = pilhaX.firstElement();
 
             if (ehUmTerminal(topoPilhaX)) {
-
+                if (topoPilhaX.getCodigo().equals(topoPilhaA.getToken().getCod())) {
+                    pilhaA.remove(topoPilhaA);
+                    pilhaX.remove(topoPilhaX);
+                } else {
+                    informarErro();
+                    return;
+                }
             } else {
-                String referencia = topoPilhaA + "," + topoPilhaA;
+                String referencia = topoPilhaX.getCodigo() + "," + topoPilhaA.getToken().getCod();
                 Item item = procurarPelaReferencia(referencia);
-                pilhaX.pop();
 
-                adicionarNaPilhaInformacoesDoParser(pilhaX, item);
+                if (Objects.nonNull(item)) {
+                    pilhaX.remove(topoPilhaX);
+                    adicionarNaPilhaInformacoesDoParser(pilhaX, item);
+                } else {
+                    informarErro();
+                    return;
+                }
             }
         }
+
+        resultadoExecucao.setStatusAnalise(StatusAnalise.SUCESSO);
+    }
+
+    private void informarErro() {
+        resultadoExecucao.setStatusAnalise(StatusAnalise.FALHA);
     }
 
     private void adicionarNaPilhaInformacoesDoParser(Stack<SimboloComCodigo> pilhaX, Item item) {
-        Arrays.stream(item.getDerivacao().split("|"))
+        AtomicInteger index = new AtomicInteger();
+        Arrays.stream(item.getDerivacao().split("\\|"))
                 .collect(Collectors.toList())
                 .forEach(s -> {
                     Integer codigo = pegaCodigo(s);
                     if (codigo > 0) {
-                        pilhaX.add(new SimboloComCodigo(codigo, s));
+                        pilhaX.add(index.get(), new SimboloComCodigo(codigo, s));
+                        index.getAndIncrement();
                     }
                 });
     }
