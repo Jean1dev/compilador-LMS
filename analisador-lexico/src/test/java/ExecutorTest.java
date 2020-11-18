@@ -299,4 +299,18 @@ public class ExecutorTest {
 
         Assert.assertEquals(30, resultado.getPalavras().size());
     }
+
+    @Test
+    public void testeArray() {
+        String gramatica = "ARRAY[0..20]";
+
+        ArquivoUtils.gravarArquivo(gramatica);
+        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .validarTexto()
+                .getResultado();
+
+        Assert.assertEquals(6, resultado.getPalavras().size());
+    }
 }

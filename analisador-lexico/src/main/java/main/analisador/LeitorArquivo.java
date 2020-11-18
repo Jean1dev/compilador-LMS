@@ -94,7 +94,20 @@ public class LeitorArquivo {
             }
         }
 
+        if (isOperador(lido) && !texto.isEmpty()) {
+            int index = texto.size()- 1;
+            if (ehArray(texto.get(index), lido)) {
+                texto.remove(index);
+                texto.add("..");
+                return new StringBuilder();
+            }
+        }
+
         return palavra;
+    }
+
+    private boolean ehArray(String ultimaNaPilha, char atual) {
+        return ultimaNaPilha.equals(String.valueOf(PONTO)) && atual == PONTO;
     }
 
     private void aplicarRegrasDoLexico(String conteudo, ArrayList<String> texto) {
