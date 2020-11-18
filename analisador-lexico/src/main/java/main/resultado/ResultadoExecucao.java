@@ -21,4 +21,8 @@ public class ResultadoExecucao {
     private Stack<CaracterAnalisadoInfo> stack;
 
     private StatusAnalise statusAnalise;
+
+    public void addMessage(String message) {
+        mensagensValidacao.add(message);
+    }
 }

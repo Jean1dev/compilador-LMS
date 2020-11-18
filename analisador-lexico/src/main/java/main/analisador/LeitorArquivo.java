@@ -4,11 +4,10 @@ import main.resultado.ResultadoExecucao;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.List;
 
+import static main.analisador.GramaticaConstants.*;
 import static main.analisador.specs.ValidacoesLexicas.validarNomeVariavel;
 import static main.analisador.specs.ValidacoesLexicas.verificarSeInteiroFoiAlocadoEmNoLugarCerto;
-import static main.analisador.GramaticaConstants.*;
 
 public class LeitorArquivo {
 
@@ -70,6 +69,7 @@ public class LeitorArquivo {
             return texto;
         } catch (Exception e) {
             e.printStackTrace();
+            resultadoExecucao.addMessage("Erro na leitura do arquivo");
             return null;
         }
     }
@@ -169,9 +169,8 @@ public class LeitorArquivo {
     }
 
     private void setarErroNoContexto(String variavel) {
-        List<String> mensagensValidacao = resultadoExecucao.getMensagensValidacao();
         String erro = "Erro na linha " + totalLinhasArquivo + " a variavel " + variavel + " é invalida";
-        mensagensValidacao.add(erro);
+        resultadoExecucao.addMessage(erro);
     }
 
     private boolean isFimComentario(StringBuilder palavra) {
