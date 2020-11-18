@@ -28,11 +28,15 @@ public class AnalisadorTexto {
 
     public void analisar() {
         Stack<CaracterAnalisadoInfo> stack = new Stack<>();
-        resultadoExecucao.getPalavras().forEach(palavra -> {
+        resultadoExecucao.getPalavrasComLinha().forEach(palavra -> {
+            String[] split = palavra.split("#");
+            palavra = split[0];
+            String nLinha = split[1];
             Token token = getToken(palavra);
 
             CaracterAnalisadoInfo info = CaracterAnalisadoInfo.builder()
                     .valor(palavra)
+                    .nLinha(Integer.parseInt(nLinha))
                     .build();
 
             if (Objects.isNull(token)) {

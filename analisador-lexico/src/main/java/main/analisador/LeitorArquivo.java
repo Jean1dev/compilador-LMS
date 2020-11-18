@@ -15,7 +15,7 @@ public class LeitorArquivo {
 
     private final String arquivoPath;
 
-    private int totalLinhasArquivo;
+    private int totalLinhasArquivo = 1;
 
     private Boolean textoComentado = false;
 
@@ -85,7 +85,7 @@ public class LeitorArquivo {
                 aplicarRegrasDoLexico(conteudo, texto);
                 adicionarNoTexto(conteudo, texto);
             }
-            texto.add(String.valueOf(lido));
+            add(texto, String.valueOf(lido));
             return new StringBuilder();
         }
 
@@ -101,7 +101,7 @@ public class LeitorArquivo {
             int index = texto.size()- 1;
             if (ehArray(texto.get(index), lido)) {
                 texto.remove(index);
-                texto.add("..");
+                add(texto, "..");
                 return new StringBuilder();
             }
         }
@@ -114,15 +114,20 @@ public class LeitorArquivo {
             textoLiteral = true;
             if (verificarSeOInicialEFinalSaoAspas(conteudo)) {
                 textoLiteral = false;
-                texto.add(conteudo);
+                add(texto, conteudo);
                 return new StringBuilder();
             }
 
             return new StringBuilder(conteudo);
         }
 
-        texto.add(conteudo);
+        add(texto, conteudo);
         return new StringBuilder();
+    }
+
+    private void add(ArrayList<String> texto, String conteudo) {
+        texto.add(conteudo);
+        resultadoExecucao.addPalavraComLinha(conteudo + "#" + totalLinhasArquivo);
     }
 
     private boolean verificarSeOInicialEFinalSaoAspas(String conteudo) {

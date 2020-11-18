@@ -16,6 +16,8 @@ public class ResultadoExecucao {
 
     private List<String> palavras;
 
+    private List<String> palavrasComLinha = new ArrayList<>();;
+
     private List<String> mensagensValidacao = new ArrayList<>();
 
     private Stack<CaracterAnalisadoInfo> stack;
@@ -24,5 +26,9 @@ public class ResultadoExecucao {
 
     public void addMessage(String message) {
         mensagensValidacao.add(message);
+    }
+
+    public void addPalavraComLinha(String conteudo) {
+        palavrasComLinha.add(conteudo);
     }
 }
