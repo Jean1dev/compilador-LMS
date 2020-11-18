@@ -20,6 +20,8 @@ public class LeitorArquivo {
 
     private Boolean textoComentado = false;
 
+    private Boolean textoLiteral = false;
+
     private LeitorArquivo(ResultadoExecucao resultadoExecucao, String arquivoPath) {
         this.resultadoExecucao = resultadoExecucao;
         this.arquivoPath = arquivoPath;
@@ -81,6 +83,7 @@ public class LeitorArquivo {
             String conteudo = removeOperador(palavra.toString(), lido);
             if (!conteudo.isEmpty()) {
                 aplicarRegrasDoLexico(conteudo, texto);
+                adicionarNoTexto(conteudo, texto);
             }
             texto.add(String.valueOf(lido));
             return new StringBuilder();
@@ -90,7 +93,7 @@ public class LeitorArquivo {
             String palavraFormatada = palavra.toString().trim();
             if (!palavraFormatada.isEmpty()) {
                 aplicarRegrasDoLexico(palavraFormatada, texto);
-                return new StringBuilder();
+                return adicionarNoTexto(palavraFormatada, texto);
             }
         }
 
@@ -106,6 +109,32 @@ public class LeitorArquivo {
         return palavra;
     }
 
+    private StringBuilder adicionarNoTexto(String conteudo, ArrayList<String> texto) {
+        if (ehLiteral(conteudo)) {
+            textoLiteral = true;
+            if (verificarSeOInicialEFinalSaoAspas(conteudo)) {
+                textoLiteral = false;
+                texto.add(conteudo);
+                return new StringBuilder();
+            }
+
+            return new StringBuilder(conteudo);
+        }
+
+        texto.add(conteudo);
+        return new StringBuilder();
+    }
+
+    private boolean verificarSeOInicialEFinalSaoAspas(String conteudo) {
+        String posicaoInicial = String.valueOf(conteudo.charAt(0));
+        String posicaoFinal = String.valueOf(conteudo.charAt(conteudo.length() - 1));
+        return ehLiteral(posicaoInicial) && ehLiteral(posicaoFinal);
+    }
+
+    private boolean ehLiteral(String palavraFormatada) {
+        return palavraFormatada.contains(String.valueOf(ASPAS_SIMPLES));
+    }
+
     private boolean ehArray(String ultimaNaPilha, char atual) {
         return ultimaNaPilha.equals(String.valueOf(PONTO)) && atual == PONTO;
     }
@@ -113,8 +142,6 @@ public class LeitorArquivo {
     private void aplicarRegrasDoLexico(String conteudo, ArrayList<String> texto) {
         if (validarNomeVariavel(conteudo) && !verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1)))
             setarErroNoContexto(conteudo);
-
-        texto.add(conteudo);
     }
 
     private String removeOperador(String palavra, char lido) {

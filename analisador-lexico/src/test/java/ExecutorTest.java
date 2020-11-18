@@ -313,4 +313,22 @@ public class ExecutorTest {
 
         Assert.assertEquals(6, resultado.getPalavras().size());
     }
+
+    @Test
+    public void testeLiteral() {
+        String gramatica = "(*TESTE - EXEMPLO VÁLIDO*)\n" +
+                "PROGRAM TESTE123;\n" +
+                "VAR x = 'ESSE ´E UM LITERAL';\n" +
+                "BEGIN\n" +
+                "END.";
+
+        ArquivoUtils.gravarArquivo(gramatica);
+        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .validarTexto()
+                .getResultado();
+
+        Assert.assertEquals(11, resultado.getPalavras().size());
+    }
 }

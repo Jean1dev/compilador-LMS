@@ -1,5 +1,6 @@
 package main.analisador;
 
+import jdk.nashorn.internal.objects.NativeString;
 import main.resultado.ResultadoExecucao;
 import main.token.CaracterAnalisadoInfo;
 import main.token.CriarTabelaToken;
@@ -8,6 +9,8 @@ import main.token.Token;
 import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
+
+import static main.analisador.GramaticaConstants.ASPAS_SIMPLES;
 
 public class AnalisadorTexto {
 
@@ -50,7 +53,19 @@ public class AnalisadorTexto {
             return;
         }
 
+        if (isLiteral(palavra)) {
+            info.setToken(Token.literal());
+            return;
+        }
+
         info.setToken(Token.identificador());
+    }
+
+    private boolean isLiteral(String palavra) {
+        String conteudo = palavra.trim();
+        char posicaoInicial = conteudo.charAt(0);
+        char posicaoFinal = conteudo.charAt(conteudo.length() - 1);
+        return posicaoInicial == ASPAS_SIMPLES && posicaoFinal == ASPAS_SIMPLES;
     }
 
     private boolean isNumeral(String palavra) {
