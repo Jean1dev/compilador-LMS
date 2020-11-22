@@ -28,6 +28,7 @@ public class ActionCodeEditor {
 
     public void compile() {
         resultadoExecucao = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        new analisador.Executor(resultadoExecucao).doSintatico();
     }
 
     public String getStatusCompilacao() {

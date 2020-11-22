@@ -51,7 +51,7 @@ public class Executor {
                     pilhaA.remove(topoPilhaA);
                     pilhaX.remove(topoPilhaX);
                 } else {
-                    informarErro();
+                    informarErro(topoPilhaA);
                     return;
                 }
             } else {
@@ -62,7 +62,7 @@ public class Executor {
                     pilhaX.remove(topoPilhaX);
                     adicionarNaPilhaInformacoesDoParser(pilhaX, item);
                 } else {
-                    informarErro();
+                    informarErro(topoPilhaA);
                     return;
                 }
             }
@@ -71,8 +71,9 @@ public class Executor {
         resultadoExecucao.setStatusAnalise(StatusAnalise.SUCESSO);
     }
 
-    private void informarErro() {
+    private void informarErro(CaracterAnalisadoInfo topoPilhaA) {
         resultadoExecucao.setStatusAnalise(StatusAnalise.FALHA);
+        resultadoExecucao.addMessage("Falha na alise sintatica, problema esta na linha " + topoPilhaA.getNLinha());
     }
 
     private void adicionarNaPilhaInformacoesDoParser(Stack<SimboloComCodigo> pilhaX, Item item) {
