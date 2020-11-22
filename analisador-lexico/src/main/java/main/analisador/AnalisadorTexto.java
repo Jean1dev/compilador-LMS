@@ -1,6 +1,5 @@
 package main.analisador;
 
-import jdk.nashorn.internal.objects.NativeString;
 import main.resultado.ResultadoExecucao;
 import main.token.CaracterAnalisadoInfo;
 import main.token.CriarTabelaToken;

@@ -18,6 +18,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertTrue(resultado.getPalavras().isEmpty());
+        Assert.assertTrue(resultado.getPalavrasComLinha().isEmpty());
     }
 
     @Test
@@ -43,6 +44,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(30, resultado.getPalavras().size());
+        Assert.assertEquals(30, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -70,9 +72,11 @@ public class ExecutorTest {
         ArquivoUtils.gravarArquivo(gramatica);
         ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
+                .analisarTexto()
                 .getResultado();
 
         Assert.assertEquals(63, resultado.getPalavras().size());
+        Assert.assertEquals(63, resultado.getPalavrasComLinha().size());
     }
 
 
@@ -108,6 +112,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(71, resultado.getPalavras().size());
+        Assert.assertEquals(71, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -122,6 +127,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(1, resultado.getPalavras().size());
+        Assert.assertEquals(1, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -157,6 +163,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(71, resultado.getPalavras().size());
+        Assert.assertEquals(71, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -180,6 +187,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(30, resultado.getPalavras().size());
+        Assert.assertEquals(30, resultado.getPalavrasComLinha().size());
         Assert.assertEquals(1, resultado.getMensagensValidacao().size());
     }
 
@@ -272,6 +280,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(209, resultado.getPalavras().size());
+        Assert.assertEquals(209, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -298,6 +307,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(30, resultado.getPalavras().size());
+        Assert.assertEquals(30, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -312,6 +322,7 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(6, resultado.getPalavras().size());
+        Assert.assertEquals(6, resultado.getPalavrasComLinha().size());
     }
 
     @Test
@@ -330,5 +341,6 @@ public class ExecutorTest {
                 .getResultado();
 
         Assert.assertEquals(11, resultado.getPalavras().size());
+        Assert.assertEquals(11, resultado.getPalavrasComLinha().size());
     }
 }

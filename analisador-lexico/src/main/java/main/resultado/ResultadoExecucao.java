@@ -31,4 +31,8 @@ public class ResultadoExecucao {
     public void addPalavraComLinha(String conteudo) {
         palavrasComLinha.add(conteudo);
     }
+
+    public void removeLastPalavraComLinha() {
+        palavrasComLinha.remove(palavrasComLinha.size() -1);
+    }
 }

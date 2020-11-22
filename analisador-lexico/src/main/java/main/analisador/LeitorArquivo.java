@@ -101,7 +101,7 @@ public class LeitorArquivo {
             int index = texto.size()- 1;
             if (ehArray(texto.get(index), lido)) {
                 texto.remove(index);
-                add(texto, "..");
+                add(texto, "..", true);
                 return new StringBuilder();
             }
         }
@@ -127,6 +127,12 @@ public class LeitorArquivo {
 
     private void add(ArrayList<String> texto, String conteudo) {
         texto.add(conteudo);
+        resultadoExecucao.addPalavraComLinha(conteudo + "#" + totalLinhasArquivo);
+    }
+
+    private void add(ArrayList<String> texto, String conteudo, boolean addArray) {
+        texto.add(conteudo);
+        resultadoExecucao.removeLastPalavraComLinha();
         resultadoExecucao.addPalavraComLinha(conteudo + "#" + totalLinhasArquivo);
     }
 
