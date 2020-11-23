@@ -4,11 +4,10 @@ import main.resultado.ResultadoExecucao;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.List;
 
+import static main.analisador.GramaticaConstants.*;
 import static main.analisador.specs.ValidacoesLexicas.validarNomeVariavel;
 import static main.analisador.specs.ValidacoesLexicas.verificarSeInteiroFoiAlocadoEmNoLugarCerto;
-import static main.analisador.GramaticaConstants.*;
 
 public class LeitorArquivo {
 
@@ -16,9 +15,11 @@ public class LeitorArquivo {
 
     private final String arquivoPath;
 
-    private int totalLinhasArquivo;
+    private int totalLinhasArquivo = 1;
 
     private Boolean textoComentado = false;
+
+    private Boolean textoLiteral = false;
 
     private LeitorArquivo(ResultadoExecucao resultadoExecucao, String arquivoPath) {
         this.resultadoExecucao = resultadoExecucao;
@@ -68,6 +69,7 @@ public class LeitorArquivo {
             return texto;
         } catch (Exception e) {
             e.printStackTrace();
+            resultadoExecucao.addMessage("Erro na leitura do arquivo");
             return null;
         }
     }
@@ -81,8 +83,9 @@ public class LeitorArquivo {
             String conteudo = removeOperador(palavra.toString(), lido);
             if (!conteudo.isEmpty()) {
                 aplicarRegrasDoLexico(conteudo, texto);
+                adicionarNoTexto(conteudo, texto);
             }
-            texto.add(String.valueOf(lido));
+            add(texto, String.valueOf(lido));
             return new StringBuilder();
         }
 
@@ -90,6 +93,15 @@ public class LeitorArquivo {
             String palavraFormatada = palavra.toString().trim();
             if (!palavraFormatada.isEmpty()) {
                 aplicarRegrasDoLexico(palavraFormatada, texto);
+                return adicionarNoTexto(palavraFormatada, texto);
+            }
+        }
+
+        if (isOperador(lido) && !texto.isEmpty()) {
+            int index = texto.size()- 1;
+            if (ehArray(texto.get(index), lido)) {
+                texto.remove(index);
+                add(texto, "..", true);
                 return new StringBuilder();
             }
         }
@@ -97,11 +109,50 @@ public class LeitorArquivo {
         return palavra;
     }
 
+    private StringBuilder adicionarNoTexto(String conteudo, ArrayList<String> texto) {
+        if (ehLiteral(conteudo)) {
+            textoLiteral = true;
+            if (verificarSeOInicialEFinalSaoAspas(conteudo)) {
+                textoLiteral = false;
+                add(texto, conteudo);
+                return new StringBuilder();
+            }
+
+            return new StringBuilder(conteudo);
+        }
+
+        add(texto, conteudo);
+        return new StringBuilder();
+    }
+
+    private void add(ArrayList<String> texto, String conteudo) {
+        texto.add(conteudo);
+        resultadoExecucao.addPalavraComLinha(conteudo + "#" + totalLinhasArquivo);
+    }
+
+    private void add(ArrayList<String> texto, String conteudo, boolean addArray) {
+        texto.add(conteudo);
+        resultadoExecucao.removeLastPalavraComLinha();
+        resultadoExecucao.addPalavraComLinha(conteudo + "#" + totalLinhasArquivo);
+    }
+
+    private boolean verificarSeOInicialEFinalSaoAspas(String conteudo) {
+        String posicaoInicial = String.valueOf(conteudo.charAt(0));
+        String posicaoFinal = String.valueOf(conteudo.charAt(conteudo.length() - 1));
+        return ehLiteral(posicaoInicial) && ehLiteral(posicaoFinal);
+    }
+
+    private boolean ehLiteral(String palavraFormatada) {
+        return palavraFormatada.contains(String.valueOf(ASPAS_SIMPLES));
+    }
+
+    private boolean ehArray(String ultimaNaPilha, char atual) {
+        return ultimaNaPilha.equals(String.valueOf(PONTO)) && atual == PONTO;
+    }
+
     private void aplicarRegrasDoLexico(String conteudo, ArrayList<String> texto) {
         if (validarNomeVariavel(conteudo) && !verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1)))
             setarErroNoContexto(conteudo);
-
-        texto.add(conteudo);
     }
 
     private String removeOperador(String palavra, char lido) {
@@ -129,9 +180,8 @@ public class LeitorArquivo {
     }
 
     private void setarErroNoContexto(String variavel) {
-        List<String> mensagensValidacao = resultadoExecucao.getMensagensValidacao();
         String erro = "Erro na linha " + totalLinhasArquivo + " a variavel " + variavel + " é invalida";
-        mensagensValidacao.add(erro);
+        resultadoExecucao.addMessage(erro);
     }
 
     private boolean isFimComentario(StringBuilder palavra) {

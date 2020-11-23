@@ -27,4 +27,8 @@ public class Token {
     public static Token numeral() {
         return new Token(26, "INTEIRO");
     }
+
+    public static Token literal() {
+        return new Token(48, "LITERAL");
+    }
 }

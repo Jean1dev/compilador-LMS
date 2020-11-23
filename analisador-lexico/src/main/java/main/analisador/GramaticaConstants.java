@@ -4,6 +4,8 @@ public final class GramaticaConstants {
 
     public static final char ESPACO = ' ';
 
+    public static final char ASPAS_SIMPLES = '\'';
+
     public static final char QUEBRA_LINHA = '\n';
 
     public static final String INICIO_COMENTARIO = "(*";

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
 
+import static main.analisador.GramaticaConstants.ASPAS_SIMPLES;
+
 public class AnalisadorTexto {
 
     private final ResultadoExecucao resultadoExecucao;
@@ -25,11 +27,15 @@ public class AnalisadorTexto {
 
     public void analisar() {
         Stack<CaracterAnalisadoInfo> stack = new Stack<>();
-        resultadoExecucao.getPalavras().forEach(palavra -> {
+        resultadoExecucao.getPalavrasComLinha().forEach(palavra -> {
+            String[] split = palavra.split("#");
+            palavra = split[0];
+            String nLinha = split[1];
             Token token = getToken(palavra);
 
             CaracterAnalisadoInfo info = CaracterAnalisadoInfo.builder()
                     .valor(palavra)
+                    .nLinha(Integer.parseInt(nLinha))
                     .build();
 
             if (Objects.isNull(token)) {
@@ -50,7 +56,19 @@ public class AnalisadorTexto {
             return;
         }
 
+        if (isLiteral(palavra)) {
+            info.setToken(Token.literal());
+            return;
+        }
+
         info.setToken(Token.identificador());
+    }
+
+    private boolean isLiteral(String palavra) {
+        String conteudo = palavra.trim();
+        char posicaoInicial = conteudo.charAt(0);
+        char posicaoFinal = conteudo.charAt(conteudo.length() - 1);
+        return posicaoInicial == ASPAS_SIMPLES && posicaoFinal == ASPAS_SIMPLES;
     }
 
     private boolean isNumeral(String palavra) {
