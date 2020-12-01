@@ -1,9 +1,12 @@
 package classificacao;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 public class TabelaClassificacao {
 
     private List<ItemClassificador> itens = new ArrayList<>();
@@ -22,12 +25,16 @@ public class TabelaClassificacao {
     }
 
     public Boolean buscar(ItemClassificador buscar) {
-        ItemClassificador elemento = itens.stream()
-                .filter(item -> item.getNivel().equals(buscar.getNivel()))
-                .filter(item -> item.getNomeIdentificador().equalsIgnoreCase(buscar.getNomeIdentificador()))
-                .findFirst()
-                .orElse(null);
+        if (Categoria.VARIAVEL.equals(buscar.getCategoria())) {
+            ItemClassificador elemento = itens.stream()
+                    .filter(item -> item.getNivel().equals(buscar.getNivel()))
+                    .filter(item -> item.getNomeIdentificador().equalsIgnoreCase(buscar.getNomeIdentificador()))
+                    .findFirst()
+                    .orElse(null);
 
-        return Objects.nonNull(elemento);
+            return Objects.nonNull(elemento);
+        }
+
+        return true;
     }
 }

@@ -5,5 +5,6 @@ public enum Categoria {
     CONSTANTE,
     PROCEDURE,
     ROTULO,
-    PARAMETRO
+    PARAMETRO,
+    NAO_DETERMINADO
 }
