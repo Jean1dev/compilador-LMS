@@ -20,5 +20,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build with Maven
+    - name: Analisador lexico
       run: mvn -B package --file analisador-lexico/pom.xml
+    - name: Analisador sintatico
+      run: mvn -B package --file analisador-sintatico/pom.xml
+

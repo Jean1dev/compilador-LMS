@@ -80,6 +80,11 @@ public class LeitorArquivo {
                                                     boolean quebraLinha,
                                                     ArrayList<String> texto) {
         if (palavra.toString().trim().length() > 1 && isOperador(lido)) {
+            if (palavra.toString().trim().equalsIgnoreCase("<>")) {
+                add(texto, "<>");
+                return new StringBuilder();
+            }
+
             String conteudo = removeOperador(palavra.toString(), lido);
             if (!conteudo.isEmpty()) {
                 aplicarRegrasDoLexico(conteudo, texto);
@@ -104,6 +109,11 @@ public class LeitorArquivo {
                 add(texto, "..", true);
                 return new StringBuilder();
             }
+        }
+
+        if (palavra.length() > 1 && palavra.toString().charAt(0) == '(') {
+            add(texto, "(");
+            return palavra.replace(0, 1, "");
         }
 
         return palavra;
@@ -213,6 +223,7 @@ public class LeitorArquivo {
                 lido == VIRGULA ||
                 lido == PONTO ||
                 lido == ABRE_CHAVES ||
+                lido == DOIS_PONTOS_VERTICAL ||
                 lido == FECHA_FECHAS;
     }
 }
