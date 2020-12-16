@@ -21,12 +21,12 @@ public class ExecutorSemantico {
                 .getResultadoExecucao();
     }
 
-    protected ExecutorSintatico criarTabelaClassificadora() {
+    protected ExecutorSemantico criarTabelaClassificadora() {
         tabelaClassificacao = new CriarTabelaClassificadora(resultadoExecucao).criar();
         return this;
     }
 
-    protected ExecutorSintatico validarTabelaClassicacao() {
+    protected ExecutorSemantico validarTabelaClassicacao() {
         new Validador(resultadoExecucao, tabelaClassificacao).validar();
         return this;
     }

@@ -1,6 +1,6 @@
 import analisador.ExecutorSemantico;
 import analisador.ExecutorSintatico;
-import main.analisador.Executor;
+import main.analisador.ExecutorLexico;
 import main.arquivo.ArquivoUtils;
 import main.resultado.ResultadoExecucao;
 import org.junit.Assert;
@@ -19,7 +19,7 @@ public class SemanticoTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
         ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
