@@ -17,7 +17,7 @@ import static gramatica.XMLInstanciador.getCatalogoPalavras;
 import static gramatica.XMLInstanciador.getTabelaParser;
 import static main.token.CaracterAnalisadoInfo.copy;
 
-public class Executor {
+public class ExecutorSintatico {
 
     private final ResultadoExecucao resultadoExecucao;
 
@@ -25,7 +25,7 @@ public class Executor {
 
     private final TabelaParsing tabelaParsing;
 
-    public Executor(ResultadoExecucao resultadoExecucao) {
+    public ExecutorSintatico(ResultadoExecucao resultadoExecucao) {
         this.resultadoExecucao = resultadoExecucao;
         catalogoPalavra = getCatalogoPalavras();
         tabelaParsing = getTabelaParser();

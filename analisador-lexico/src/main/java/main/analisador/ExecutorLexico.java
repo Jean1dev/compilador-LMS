@@ -3,13 +3,13 @@ package main.analisador;
 import main.resultado.ResultadoExecucao;
 import main.resultado.StatusAnalise;
 
-public class Executor {
+public class ExecutorLexico {
 
     private final String arquivoPath;
 
     private final ResultadoExecucao resultado;
 
-    public Executor(String arquivoPath) {
+    public ExecutorLexico(String arquivoPath) {
         this.arquivoPath = arquivoPath;
         resultado = new ResultadoExecucao();
     }
@@ -22,22 +22,22 @@ public class Executor {
                 .getResultado();
     }
 
-    public Executor lerArquivoParaPegarPrograma() {
+    public ExecutorLexico lerArquivoParaPegarPrograma() {
         LeitorArquivo.of(resultado, arquivoPath).lerArquivoESetarNoContexto();
         return this;
     }
 
-    public Executor analisarTexto() {
+    public ExecutorLexico analisarTexto() {
         AnalisadorTexto.of(resultado).analisar();
         return this;
     }
 
-    public Executor validarTexto() {
+    public ExecutorLexico validarTexto() {
         Validador.of(resultado).validarPilha();
         return this;
     }
 
-    public Executor consolidarResultado() {
+    public ExecutorLexico consolidarResultado() {
         if (resultado.getMensagensValidacao().isEmpty()) {
             resultado.setStatusAnalise(StatusAnalise.SUCESSO);
         } else {

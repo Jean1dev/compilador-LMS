@@ -22,6 +22,4 @@ jobs:
         java-version: 11
     - name: Analisador lexico
       run: mvn -B package --file analisador-lexico/pom.xml
-    - name: Analisador sintatico
-      run: mvn -B package --file analisador-sintatico/pom.xml
 

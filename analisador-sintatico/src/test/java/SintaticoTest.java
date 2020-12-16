@@ -1,4 +1,5 @@
-import main.analisador.Executor;
+import analisador.ExecutorSintatico;
+import main.analisador.ExecutorLexico;
 import main.arquivo.ArquivoUtils;
 import main.resultado.ResultadoExecucao;
 import org.junit.Assert;
@@ -7,7 +8,7 @@ import org.junit.Test;
 import static main.resultado.StatusAnalise.FALHA;
 import static main.resultado.StatusAnalise.SUCESSO;
 
-public class ExecutorTest {
+public class SintaticoTest {
 
     private static final String DEFAULT_FILE_NAME = "arquivo.txt";
 
@@ -20,9 +21,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(SUCESSO, resultado.getStatusAnalise());
@@ -43,9 +44,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(SUCESSO, resultado.getStatusAnalise());
@@ -78,9 +79,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(SUCESSO, resultado.getStatusAnalise());
@@ -94,9 +95,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(SUCESSO, resultado.getStatusAnalise());
@@ -184,9 +185,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(SUCESSO, resultado.getStatusAnalise());
@@ -209,9 +210,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(FALHA, resultado.getStatusAnalise());
@@ -254,9 +255,9 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
 
-        analisador.Executor sintatico = new analisador.Executor(resultado);
+        ExecutorSintatico sintatico = new ExecutorSintatico(resultado);
         sintatico.doSintatico();
 
         Assert.assertEquals(SUCESSO, resultado.getStatusAnalise());

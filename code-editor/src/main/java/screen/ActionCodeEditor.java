@@ -5,12 +5,14 @@
  */
 package screen;
 
-import main.analisador.Executor;
+import analisador.ExecutorSintatico;
+import main.analisador.ExecutorLexico;
 import main.arquivo.ArquivoUtils;
 import main.resultado.ResultadoExecucao;
 import main.token.CaracterAnalisadoInfo;
 
-import java.util.*;
+import java.util.List;
+import java.util.Stack;
 
 /**
  *
@@ -27,8 +29,8 @@ public class ActionCodeEditor {
     }
 
     public void compile() {
-        resultadoExecucao = new Executor(DEFAULT_FILE_NAME).analisarLexicamente();
-        new analisador.Executor(resultadoExecucao).doSintatico();
+        resultadoExecucao = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
+        new ExecutorSintatico(resultadoExecucao).doSintatico();
     }
 
     public String getStatusCompilacao() {
