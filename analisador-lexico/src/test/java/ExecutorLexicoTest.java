@@ -1,19 +1,131 @@
-import main.analisador.Executor;
+import main.analisador.ExecutorLexico;
 import main.arquivo.ArquivoUtils;
 import main.resultado.ResultadoExecucao;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ExecutorTest {
+public class ExecutorLexicoTest {
 
     private static final String DEFAULT_FILE_NAME = "arquivo.txt";
+
+    @Test
+    public void testeAsPossibilidadesDoIf() {
+        String gramatica = "PROGRAM TESTE123;\n" +
+                "\n" +
+                "BEGIN\n" +
+                "\t(*Testa as possibilidades do IF*)\n" +
+                "\tIF (10 > 15) THEN\n" +
+                "\t\tBEGIN\n" +
+                "\t\tEND\n" +
+                "\tELSE\n" +
+                "\t\tBEGIN\n" +
+                "\t\tEND;\n" +
+                "END.";
+        ArquivoUtils.gravarArquivo(gramatica);
+
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .getResultado();
+
+        Assert.assertEquals(19, resultado.getPalavras().size());
+        Assert.assertEquals(19, resultado.getPalavrasComLinha().size());
+    }
+
+    @Test
+    public void testePegosPeloProf2() {
+        String gramatica = "PROGRAM TESTE;\n" +
+                "VAR\n" +
+                "x,y,z: INTEGER;\n" +
+                "BEGIN\n" +
+                "x:= 10;\n" +
+                "END.";
+        ArquivoUtils.gravarArquivo(gramatica);
+
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .getResultado();
+
+        Assert.assertEquals(20, resultado.getPalavras().size());
+        Assert.assertEquals(20, resultado.getPalavrasComLinha().size());
+    }
+
+    @Test
+    public void testeMaiorMenor() {
+        String gramatica = "PROGRAM TESTE;\n" +
+                "BEGIN\n" +
+                "x <> 10;\n" +
+                "END.";
+        ArquivoUtils.gravarArquivo(gramatica);
+
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .getResultado();
+
+        Assert.assertEquals(10, resultado.getPalavras().size());
+        Assert.assertEquals(10, resultado.getPalavrasComLinha().size());
+    }
+
+    @Test
+    public void testeProcedure() {
+        String gramatica = "PROGRAM TESTE123;\n" +
+                "\tPROCEDURE p_teste(idd : INTEGER);\n" +
+                "\t\tLABEL\n" +
+                "\t\t\tlabel_a, label_b;\n" +
+                "\n" +
+                "\t\tCONST\n" +
+                "\t\t\ta = 100;\n" +
+                "\t\t\tb = 200;\n" +
+                "\n" +
+                "\t\tVAR\n" +
+                "\t\t\tX, Y, Z : INTEGER;\n" +
+                "\t\t\tarray_a : ARRAY[0..20] OF INTEGER;\n" +
+                "\t\t\tarray_b : ARRAY[0..1000] OF INTEGER;\n" +
+                "\tBEGIN\n" +
+                "\t\tX := a * b;\n" +
+                "\n" +
+                "\tEND;\n" +
+                "\n" +
+                "BEGIN\n" +
+                "\tcall p_teste(a);\n" +
+                "\tcall p_teste(b);\n" +
+                "\tcall p_teste(X);\n" +
+                "END.";
+
+        ArquivoUtils.gravarArquivo(gramatica);
+
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .analisarTexto()
+                .getResultado();
+
+        Assert.assertEquals(86, resultado.getPalavras().size());
+        Assert.assertEquals(86, resultado.getPalavrasComLinha().size());
+    }
+
+    @Test
+    public void testePegosPeloProf() {
+        String gramatica = "PROGRAM TESTE;\n" +
+                "VAR\n" +
+                "x,y,z: INTEGER;\n" +
+                "BEGIN\n" +
+                "END.";
+        ArquivoUtils.gravarArquivo(gramatica);
+
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
+                .lerArquivoParaPegarPrograma()
+                .getResultado();
+
+        Assert.assertEquals(15, resultado.getPalavras().size());
+        Assert.assertEquals(15, resultado.getPalavrasComLinha().size());
+    }
 
     @Test
     public void testeIgnorarComentarios() {
         String gramatica = "(* t *)";
         ArquivoUtils.gravarArquivo(gramatica);
 
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .getResultado();
 
@@ -38,7 +150,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .getResultado();
@@ -70,7 +182,7 @@ public class ExecutorTest {
         // array_a : ARRAY[0..20] OF INTEGER;
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .getResultado();
@@ -107,7 +219,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .getResultado();
 
@@ -121,7 +233,7 @@ public class ExecutorTest {
                 "     (*Testa as possibilidades do REPEAT*)\n";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .getResultado();
@@ -157,7 +269,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .getResultado();
@@ -180,7 +292,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .validarTexto()
@@ -273,7 +385,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .validarTexto()
@@ -300,7 +412,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .validarTexto()
@@ -315,7 +427,7 @@ public class ExecutorTest {
         String gramatica = "ARRAY[0..20]";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .validarTexto()
@@ -334,7 +446,7 @@ public class ExecutorTest {
                 "END.";
 
         ArquivoUtils.gravarArquivo(gramatica);
-        ResultadoExecucao resultado = new Executor(DEFAULT_FILE_NAME)
+        ResultadoExecucao resultado = new ExecutorLexico(DEFAULT_FILE_NAME)
                 .lerArquivoParaPegarPrograma()
                 .analisarTexto()
                 .validarTexto()

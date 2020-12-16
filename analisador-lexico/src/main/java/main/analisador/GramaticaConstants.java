@@ -14,6 +14,8 @@ public final class GramaticaConstants {
 
     public static final char PONTO_VIRGULA = ';';
 
+    public static final char DOIS_PONTOS_VERTICAL = ':';
+
     public static final char MAIS = '+';
 
     public static final char MENOS = '-';

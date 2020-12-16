@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static gramatica.SimboloComCodigo.simboloInicial;
@@ -45,17 +46,22 @@ public class ExecutorSintatico {
         while (!pilhaA.empty() || !pilhaX.empty()) {
             CaracterAnalisadoInfo topoPilhaA = pilhaA.firstElement();
             SimboloComCodigo topoPilhaX = pilhaX.firstElement();
+            System.out.println("PILHA A:: " + topoPilhaA.getValor() + " " + topoPilhaA.getToken().getSimbolo());
+            System.out.println("PILHA X:: " + topoPilhaX.getSimbolo());
+            System.out.println("\n");
 
             if (ehUmTerminal(topoPilhaX)) {
                 if (topoPilhaX.getCodigo().equals(topoPilhaA.getToken().getCod())) {
                     pilhaA.remove(topoPilhaA);
                     pilhaX.remove(topoPilhaX);
+                    logPilhaX(pilhaX);
                 } else {
                     informarErro(topoPilhaA);
                     return;
                 }
             } else {
                 String referencia = topoPilhaX.getCodigo() + "," + topoPilhaA.getToken().getCod();
+                System.out.println("referencia buscada " + referencia);
                 Item item = procurarPelaReferencia(referencia);
 
                 if (Objects.nonNull(item)) {
@@ -87,6 +93,15 @@ public class ExecutorSintatico {
                         index.getAndIncrement();
                     }
                 });
+
+        logPilhaX(pilhaX);
+    }
+
+    private void logPilhaX(Stack<SimboloComCodigo> pilhaX) {
+        System.out.println("\n");
+        AtomicReference<String> log = new AtomicReference<>("");
+        pilhaX.forEach(simboloComCodigo -> log.set(log.get() + (simboloComCodigo.getSimbolo() + "|")));
+        System.out.println(log);
     }
 
     private Integer pegaCodigo(String palavra) {

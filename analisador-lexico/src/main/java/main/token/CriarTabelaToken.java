@@ -12,6 +12,7 @@ public final class CriarTabelaToken {
         tabelaTokens.add(Token.of(1, "PROGRAM"));
         tabelaTokens.add(Token.of(2, "LABEL"));
         tabelaTokens.add(Token.of(3, "CONST"));
+        tabelaTokens.add(Token.of(5, "PROCEDURE"));
         tabelaTokens.add(Token.of(4, "VAR"));
         tabelaTokens.add(Token.of(6, "BEGIN"));
         tabelaTokens.add(Token.of(7, "END"));
