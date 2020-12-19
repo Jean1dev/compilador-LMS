@@ -4,6 +4,8 @@ import classificacao.Categoria;
 import classificacao.TabelaClassificacao;
 import main.resultado.ResultadoExecucao;
 
+import java.util.Objects;
+
 public class Validador {
 
     private final ResultadoExecucao resultadoExecucao;
@@ -20,6 +22,9 @@ public class Validador {
     }
 
     private void validarVariaveis() {
+        if (Objects.isNull(tabelaClassificacao)) {
+            return;
+        }
         tabelaClassificacao.getItens()
                 .stream()
                 .filter(item -> Categoria.VARIAVEL.equals(item.getCategoria()))

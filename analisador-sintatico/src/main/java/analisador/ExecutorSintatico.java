@@ -79,7 +79,7 @@ public class ExecutorSintatico {
 
     private void informarErro(CaracterAnalisadoInfo topoPilhaA) {
         resultadoExecucao.setStatusAnalise(StatusAnalise.FALHA);
-        resultadoExecucao.addMessage("Falha na alise sintatica, problema esta na linha " + topoPilhaA.getNLinha());
+        resultadoExecucao.addMessage("Falha na anlise sintatica, problema esta na linha " + topoPilhaA.getNLinha() + " -valor- " + topoPilhaA.getValor());
     }
 
     private void adicionarNaPilhaInformacoesDoParser(Stack<SimboloComCodigo> pilhaX, Item item) {

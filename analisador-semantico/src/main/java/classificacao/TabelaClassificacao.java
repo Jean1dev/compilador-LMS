@@ -32,7 +32,7 @@ public class TabelaClassificacao {
                     .findFirst()
                     .orElse(null);
 
-            return Objects.nonNull(elemento);
+            return Objects.isNull(elemento);
         }
 
         return true;

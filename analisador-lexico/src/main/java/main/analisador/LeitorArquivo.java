@@ -6,8 +6,6 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import static main.analisador.GramaticaConstants.*;
-import static main.analisador.specs.ValidacoesLexicas.validarNomeVariavel;
-import static main.analisador.specs.ValidacoesLexicas.verificarSeInteiroFoiAlocadoEmNoLugarCerto;
 
 public class LeitorArquivo {
 
@@ -160,9 +158,10 @@ public class LeitorArquivo {
         return ultimaNaPilha.equals(String.valueOf(PONTO)) && atual == PONTO;
     }
 
+    @Deprecated
     private void aplicarRegrasDoLexico(String conteudo, ArrayList<String> texto) {
-        if (validarNomeVariavel(conteudo) && !verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1)))
-            setarErroNoContexto(conteudo);
+//        if (validarNomeVariavel(conteudo) && !verificarSeInteiroFoiAlocadoEmNoLugarCerto(texto.get(texto.size() - 1)))
+//            setarErroNoContexto(conteudo);
     }
 
     private String removeOperador(String palavra, char lido) {

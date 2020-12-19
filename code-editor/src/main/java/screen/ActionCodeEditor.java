@@ -5,6 +5,7 @@
  */
 package screen;
 
+import analisador.ExecutorSemantico;
 import analisador.ExecutorSintatico;
 import main.analisador.ExecutorLexico;
 import main.arquivo.ArquivoUtils;
@@ -31,6 +32,7 @@ public class ActionCodeEditor {
     public void compile() {
         resultadoExecucao = new ExecutorLexico(DEFAULT_FILE_NAME).analisarLexicamente();
         new ExecutorSintatico(resultadoExecucao).doSintatico();
+        new ExecutorSemantico(resultadoExecucao).executar();
     }
 
     public String getStatusCompilacao() {
