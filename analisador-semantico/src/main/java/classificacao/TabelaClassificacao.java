@@ -24,6 +24,10 @@ public class TabelaClassificacao {
         return false;
     }
 
+    public void forcarInsercao(ItemClassificador itemClassificador) {
+        itens.add(itemClassificador);
+    }
+
     public Boolean buscar(ItemClassificador buscar) {
         if (Categoria.VARIAVEL.equals(buscar.getCategoria())) {
             ItemClassificador elemento = itens.stream()

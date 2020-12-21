@@ -6,5 +6,6 @@ public enum Categoria {
     PROCEDURE,
     ROTULO,
     PARAMETRO,
-    NAO_DETERMINADO
+    NAO_DETERMINADO,
+    INTEIRO
 }
