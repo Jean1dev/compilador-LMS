@@ -13,7 +13,15 @@ disciplina de compiladores
 analisador-lexico
 analisa lexicamente o texto gerando um resultado de execução
 
+analisador-sintatico
+analisa sintaticamente o texto gerando um resultado de execução
+
+analisador-semantico ( FEITO PARSIAL )
+analisa semantica o texto gerando um resultado de execução
+
 code-editor
 Interface com o usuario
 ```
+
+<img src="nota.png" />
 
