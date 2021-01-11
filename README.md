@@ -16,7 +16,7 @@ analisa lexicamente o texto gerando um resultado de execução
 analisador-sintatico
 analisa sintaticamente o texto gerando um resultado de execução
 
-analisador-semantico ( FEITO PARSIAL )
+analisador-semantico ( FEITO PARCIAL )
 analisa semantica o texto gerando um resultado de execução
 
 code-editor
